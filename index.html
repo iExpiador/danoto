@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Danoto Space</title>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700" rel="stylesheet">
+    <style>
+        body {
+            display: flex;
+            min-height: 100vh;
+            justify-content: center;
+            align-items: center;
+            background: radial-gradient(circle at 50% 50%, #f4c6a5 0%, #f9d9c2 10%, #fff3e9 30%);
+            margin: 0;
+        }
+
+        svg {
+            max-width: 70vw;
+            max-height: 80vh;
+            aspect-ratio: 1/1;
+        }
+
+        /* SCSS convertido a CSS */
+        svg #blobClip {
+            transform-origin: center;
+            transition: ease transform 0.3s;
+        }
+
+        svg:hover #blobClip {
+            transform: scale(1.15) translate(0%, 0%);
+        }
+
+        svg:hover .text-content {
+            fill: white;
+        }
+
+        .text-content {
+            font: 700 10px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            fill: black;
+            transition: ease fill 0.3s;
+        }
+
+/* Botón flotante BLANCO */
+#music-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #fff3e9;
+    color: #000001;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1000;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+/* Brillo NEGRO permanente */
+box-shadow: 
+    0 0 12px rgba(0, 0, 0, 0.8),
+    inset 0 0 6px rgba(0, 0, 0, 0.4);
+
+/* Latido infinito */
+animation: pulse 2s infinite ease-in-out;
+transition: all 0.3s;
+}
+
+/* Animación NEGRA */
+@keyframes pulse {
+    0% { 
+        transform: scale(1);
+        box-shadow: 
+            0 0 12px rgba(0, 0, 0, 0.8),
+            inset 0 0 6px rgba(0, 0, 0, 0.4);
+    }
+    50% { 
+        transform: scale(1.12);
+        box-shadow: 
+            0 0 22px rgba(0, 0, 0, 1),
+            inset 0 0 12px rgba(0, 0, 0, 0.7);
+    }
+    100% { 
+        transform: scale(1);
+        box-shadow: 
+            0 0 12px rgba(0, 0, 0, 0.8),
+            inset 0 0 6px rgba(0, 0, 0, 0.4);
+    }
+}
+
+/* Hover NEGRO intenso */
+#music-toggle:hover {
+    box-shadow: 
+        0 0 30px rgba(0, 0, 0, 1),
+        inset 0 0 14px rgba(0, 0, 0, 0.9);
+}
+
+/* Click NEGRO (onda expansiva) */
+#music-toggle:active {
+    animation: pulse-click 0.5s;
+}
+
+@keyframes pulse-click {
+    0% { 
+        transform: scale(0.9);
+        box-shadow: 
+            0 0 6px rgba(0, 0, 0, 0.6),
+            inset 0 0 3px rgba(0, 0, 0, 0.4);
+    }
+    50% { 
+        transform: scale(1.18);
+        box-shadow: 
+            0 0 35px rgba(0, 0, 0, 1),
+            inset 0 0 18px rgba(0, 0, 0, 1);
+    }
+    100% { 
+        transform: scale(1);
+    }
+}   
+
+    </style>
+</head>
+<body>
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-labelledby="t">
+        <!-- GRADIENTE CON TRANSPARENCIA -->
+        <defs>
+            <linearGradient id="imgFill" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" stop-color="#f4c6a5" stop-opacity="0.3" />
+                <stop offset="50%" stop-color="#f9d9c2" stop-opacity="0.2" />
+                <stop offset="100%" stop-color="#fff3e9" stop-opacity="0.1" />
+            </linearGradient>
+        </defs>
+        
+        <!-- IMAGEN PRIMERO -->
+        <image href="https://i.imgur.com/ntFT5EC.gif" 
+               width="200" height="200" 
+               preserveAspectRatio="xMidYMid slice" 
+               clip-path="url(#blobClip)" />
+        
+        <!-- BLOB TRANSPARENTE DETRÁS DEL TEXTO -->
+        <path class="blob" 
+              d="M43.1,-68.5C56.2,-58.6,67.5,-47.3,72.3,-33.9C77.2,-20.5,75.5,-4.9,74.2,11.3C72.9,27.6,71.9,44.5,63.8,57.2C55.7,69.8,40.6,78.2,25.5,79.2C10.4,80.1,-4.7,73.6,-20.9,69.6C-37.1,65.5,-54.5,63.9,-66,54.8C-77.5,45.8,-83.2,29.3,-85.7,12.3C-88.3,-4.8,-87.7,-22.3,-79.6,-34.8C-71.5,-47.3,-55.8,-54.9,-41.3,-64.2C-26.7,-73.6,-13.4,-84.7,0.8,-86C15,-87.2,29.9,-78.5,43.1,-68.5Z" 
+              transform="translate(100 100)" 
+              fill="url(#imgFill)" />
+        
+        <!-- CLIP PATH -->
+        <clipPath id="blobClip">
+            <path d="M43.1,-68.5C56.2,-58.6,67.5,-47.3,72.3,-33.9C77.2,-20.5,75.5,-4.9,74.2,11.3C72.9,27.6,71.9,44.5,63.8,57.2C55.7,69.8,40.6,78.2,25.5,79.2C10.4,80.1,-4.7,73.6,-20.9,69.6C-37.1,65.5,-54.5,63.9,-66,54.8C-77.5,45.8,-83.2,29.3,-85.7,12.3C-88.3,-4.8,-87.7,-22.3,-79.6,-34.8C-71.5,-47.3,-55.8,-54.9,-41.3,-64.2C-26.7,-73.6,-13.4,-84.7,0.8,-86C15,-87.2,29.9,-78.5,43.1,-68.5Z" 
+                  transform="translate(100 100)" />
+        </clipPath>
+        
+        <!-- PATH PARA EL TEXTO -->
+        <path id="text" 
+              d="M43.1,-68.5C56.2,-58.6,67.5,-47.3,72.3,-33.9C77.2,-20.5,75.5,-4.9,74.2,11.3C72.9,27.6,71.9,44.5,63.8,57.2C55.7,69.8,40.6,78.2,25.5,79.2C10.4,80.1,-4.7,73.6,-20.9,69.6C-37.1,65.5,-54.5,63.9,-66,54.8C-77.5,45.8,-83.2,29.3,-85.7,12.3C-88.3,-4.8,-87.7,-22.3,-79.6,-34.8C-71.5,-47.3,-55.8,-54.9,-41.3,-64.2C-26.7,-73.6,-13.4,-84.7,0.8,-86C15,-87.2,29.9,-78.5,43.1,-68.5Z" 
+              transform="translate(100 100)" 
+              fill="none" 
+              stroke="none" 
+              pathLength="100" />
+
+        <!-- TEXTO ANIMADO -->
+        <text class="text-content">
+            <textPath href="#text" startOffset="0%">❤ MADE WITH LOVE ❤ MADE WITH LOVE ❤ MADE WITH LOVE ❤ MADE WITH LOVE <animate attributeName="startOffset" from="0%" to="100%" dur="15s" repeatCount="indefinite" />
+            </textPath>
+            <textPath href="#text" startOffset="100%">❤ MADE WITH LOVE ❤ MADE WITH LOVE ❤ MADE WITH LOVE ❤ MADE WITH LOVE <animate attributeName="startOffset" from="-100%" to="0%" dur="15s" repeatCount="indefinite" />
+            </textPath>
+        </text>
+    </svg>
+
+<!-- Botón flotante -->
+    <button id="music-toggle">🔇</button>
+    
+    <!-- Reproductor oculto -->
+    <audio id="bg-music" loop>
+        <source src="assets/nena.mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const music = document.getElementById('bg-music');
+        const toggleBtn = document.getElementById('music-toggle');
+        let isPlaying = false;
+
+        // Intentar autoplay (puede fallar)
+        music.play().then(() => {
+            isPlaying = true;
+            toggleBtn.textContent = '❚❚';
+        }).catch(() => {
+            isPlaying = false;
+            toggleBtn.textContent = '▶';
+        });
+
+        // Control manual
+        toggleBtn.addEventListener('click', () => {
+            isPlaying ? music.pause() : music.play();
+            isPlaying = !isPlaying;
+            toggleBtn.textContent = isPlaying ? '❚❚' : '▶';
+        });
+    </script>
+</body>
+</html>
