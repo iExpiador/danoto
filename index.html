@@ -11,17 +11,81 @@
             min-height: 100vh;
             justify-content: center;
             align-items: center;
-            background: radial-gradient(circle at 50% 50%, #f4c6a5 0%, #f9d9c2 10%, #fff3e9 30%);
             margin: 0;
+            overflow: hidden;
+            /* Fondo degradado oscuro con mood triste */
+            background: linear-gradient(145deg, #0b0e1a 0%, #14142b 30%, #1a1a2e 60%, #0f0f1f 100%);
+            position: relative;
         }
 
+        /* Contenedor de las estrellas cayendo */
+        .stars-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        /* Estrella fugaz individual */
+        .shooting-star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            box-shadow: 0 0 6px 2px rgba(255, 255, 255, 0.6), 0 0 20px 8px rgba(180, 160, 255, 0.3);
+            animation: shoot linear infinite;
+            opacity: 0;
+        }
+
+        /* Cola de la estrella (efecto estela) */
+        .shooting-star::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 1px;
+            background: linear-gradient(to left, rgba(255,255,255,0.8), transparent);
+            transform: rotate(0deg) translateX(0);
+            transform-origin: right center;
+        }
+
+        @keyframes shoot {
+            0% {
+                transform: translate(0, 0) scale(0.5);
+                opacity: 0;
+            }
+            5% {
+                opacity: 1;
+            }
+            15% {
+                opacity: 1;
+            }
+            25% {
+                opacity: 0;
+                transform: translate(-350px, 350px) scale(1.2);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-350px, 350px) scale(0.5);
+            }
+        }
+
+        /* SVG se mantiene por encima */
         svg {
             max-width: 70vw;
             max-height: 80vh;
             aspect-ratio: 1/1;
+            position: relative;
+            z-index: 1;
+            filter: drop-shadow(0 0 30px rgba(0, 0, 0, 0.9));
         }
 
-        /* SCSS convertido a CSS */
         svg #blobClip {
             transform-origin: center;
             transition: ease transform 0.3s;
@@ -32,129 +96,120 @@
         }
 
         svg:hover .text-content {
-            fill: white;
+            fill: #e8e0ff;
         }
 
         .text-content {
             font: 700 10px/1.2 system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
             letter-spacing: 1.5px;
             text-transform: uppercase;
-            fill: black;
+            fill: #b8b0d4;
             transition: ease fill 0.3s;
+            text-shadow: 0 0 12px rgba(0,0,0,0.9), 0 0 30px rgba(80,60,140,0.3);
         }
 
-/* Botón flotante BLANCO */
-#music-toggle {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-    background: #fff3e9;
-    color: #000001;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    z-index: 1000;
-    font-size: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+        /* Botón flotante BLANCO (igual) */
+        #music-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: #0b0e1a;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 
+                0 0 12px rgba(0, 0, 0, 0.8),
+                inset 0 0 6px rgba(0, 0, 0, 0.4);
+            animation: pulse 2s infinite ease-in-out;
+            transition: all 0.3s;
+        }
 
-/* Brillo NEGRO permanente */
-box-shadow: 
-    0 0 12px rgba(0, 0, 0, 0.8),
-    inset 0 0 6px rgba(0, 0, 0, 0.4);
+        @keyframes pulse {
+            0% { 
+                transform: scale(1);
+                box-shadow: 
+                    0 0 12px rgba(0, 0, 0, 0.8),
+                    inset 0 0 6px rgba(0, 0, 0, 0.4);
+            }
+            50% { 
+                transform: scale(1.12);
+                box-shadow: 
+                    0 0 22px rgba(0, 0, 0, 1),
+                    inset 0 0 12px rgba(0, 0, 0, 0.7);
+            }
+            100% { 
+                transform: scale(1);
+                box-shadow: 
+                    0 0 12px rgba(0, 0, 0, 0.8),
+                    inset 0 0 6px rgba(0, 0, 0, 0.4);
+            }
+        }
 
-/* Latido infinito */
-animation: pulse 2s infinite ease-in-out;
-transition: all 0.3s;
-}
+        #music-toggle:hover {
+            box-shadow: 
+                0 0 30px rgba(0, 0, 0, 1),
+                inset 0 0 14px rgba(0, 0, 0, 0.9);
+        }
 
-/* Animación NEGRA */
-@keyframes pulse {
-    0% { 
-        transform: scale(1);
-        box-shadow: 
-            0 0 12px rgba(0, 0, 0, 0.8),
-            inset 0 0 6px rgba(0, 0, 0, 0.4);
-    }
-    50% { 
-        transform: scale(1.12);
-        box-shadow: 
-            0 0 22px rgba(0, 0, 0, 1),
-            inset 0 0 12px rgba(0, 0, 0, 0.7);
-    }
-    100% { 
-        transform: scale(1);
-        box-shadow: 
-            0 0 12px rgba(0, 0, 0, 0.8),
-            inset 0 0 6px rgba(0, 0, 0, 0.4);
-    }
-}
+        #music-toggle:active {
+            animation: pulse-click 0.5s;
+        }
 
-/* Hover NEGRO intenso */
-#music-toggle:hover {
-    box-shadow: 
-        0 0 30px rgba(0, 0, 0, 1),
-        inset 0 0 14px rgba(0, 0, 0, 0.9);
-}
-
-/* Click NEGRO (onda expansiva) */
-#music-toggle:active {
-    animation: pulse-click 0.5s;
-}
-
-@keyframes pulse-click {
-    0% { 
-        transform: scale(0.9);
-        box-shadow: 
-            0 0 6px rgba(0, 0, 0, 0.6),
-            inset 0 0 3px rgba(0, 0, 0, 0.4);
-    }
-    50% { 
-        transform: scale(1.18);
-        box-shadow: 
-            0 0 35px rgba(0, 0, 0, 1),
-            inset 0 0 18px rgba(0, 0, 0, 1);
-    }
-    100% { 
-        transform: scale(1);
-    }
-}   
-
+        @keyframes pulse-click {
+            0% { 
+                transform: scale(0.9);
+                box-shadow: 
+                    0 0 6px rgba(0, 0, 0, 0.6),
+                    inset 0 0 3px rgba(0, 0, 0, 0.4);
+            }
+            50% { 
+                transform: scale(1.18);
+                box-shadow: 
+                    0 0 35px rgba(0, 0, 0, 1),
+                    inset 0 0 18px rgba(0, 0, 0, 1);
+            }
+            100% { 
+                transform: scale(1);
+            }
+        }   
     </style>
 </head>
 <body>
+    <!-- Estrellas fugaces en el fondo -->
+    <div class="stars-container" id="stars"></div>
+
     <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" aria-labelledby="t">
-        <!-- GRADIENTE CON TRANSPARENCIA -->
         <defs>
             <linearGradient id="imgFill" x1="0%" y1="0%" x2="100%" y2="100%">
-                <stop offset="0%" stop-color="#f4c6a5" stop-opacity="0.3" />
-                <stop offset="50%" stop-color="#f9d9c2" stop-opacity="0.2" />
-                <stop offset="100%" stop-color="#fff3e9" stop-opacity="0.1" />
+                <stop offset="0%" stop-color="#1a1a2e" stop-opacity="0.5" />
+                <stop offset="50%" stop-color="#14142b" stop-opacity="0.4" />
+                <stop offset="100%" stop-color="#0b0e1a" stop-opacity="0.3" />
             </linearGradient>
         </defs>
         
-        <!-- IMAGEN PRIMERO -->
         <image href="https://i.imgur.com/ntFT5EC.gif" 
                width="200" height="200" 
                preserveAspectRatio="xMidYMid slice" 
                clip-path="url(#blobClip)" />
         
-        <!-- BLOB TRANSPARENTE DETRÁS DEL TEXTO -->
         <path class="blob" 
               d="M43.1,-68.5C56.2,-58.6,67.5,-47.3,72.3,-33.9C77.2,-20.5,75.5,-4.9,74.2,11.3C72.9,27.6,71.9,44.5,63.8,57.2C55.7,69.8,40.6,78.2,25.5,79.2C10.4,80.1,-4.7,73.6,-20.9,69.6C-37.1,65.5,-54.5,63.9,-66,54.8C-77.5,45.8,-83.2,29.3,-85.7,12.3C-88.3,-4.8,-87.7,-22.3,-79.6,-34.8C-71.5,-47.3,-55.8,-54.9,-41.3,-64.2C-26.7,-73.6,-13.4,-84.7,0.8,-86C15,-87.2,29.9,-78.5,43.1,-68.5Z" 
               transform="translate(100 100)" 
               fill="url(#imgFill)" />
         
-        <!-- CLIP PATH -->
         <clipPath id="blobClip">
             <path d="M43.1,-68.5C56.2,-58.6,67.5,-47.3,72.3,-33.9C77.2,-20.5,75.5,-4.9,74.2,11.3C72.9,27.6,71.9,44.5,63.8,57.2C55.7,69.8,40.6,78.2,25.5,79.2C10.4,80.1,-4.7,73.6,-20.9,69.6C-37.1,65.5,-54.5,63.9,-66,54.8C-77.5,45.8,-83.2,29.3,-85.7,12.3C-88.3,-4.8,-87.7,-22.3,-79.6,-34.8C-71.5,-47.3,-55.8,-54.9,-41.3,-64.2C-26.7,-73.6,-13.4,-84.7,0.8,-86C15,-87.2,29.9,-78.5,43.1,-68.5Z" 
                   transform="translate(100 100)" />
         </clipPath>
         
-        <!-- PATH PARA EL TEXTO -->
         <path id="text" 
               d="M43.1,-68.5C56.2,-58.6,67.5,-47.3,72.3,-33.9C77.2,-20.5,75.5,-4.9,74.2,11.3C72.9,27.6,71.9,44.5,63.8,57.2C55.7,69.8,40.6,78.2,25.5,79.2C10.4,80.1,-4.7,73.6,-20.9,69.6C-37.1,65.5,-54.5,63.9,-66,54.8C-77.5,45.8,-83.2,29.3,-85.7,12.3C-88.3,-4.8,-87.7,-22.3,-79.6,-34.8C-71.5,-47.3,-55.8,-54.9,-41.3,-64.2C-26.7,-73.6,-13.4,-84.7,0.8,-86C15,-87.2,29.9,-78.5,43.1,-68.5Z" 
               transform="translate(100 100)" 
@@ -162,7 +217,6 @@ transition: all 0.3s;
               stroke="none" 
               pathLength="100" />
 
-        <!-- TEXTO ANIMADO -->
         <text class="text-content">
             <textPath href="#text" startOffset="0%">❤ MADE WITH LOVE ❤ MADE WITH LOVE ❤ MADE WITH LOVE ❤ MADE WITH LOVE <animate attributeName="startOffset" from="0%" to="100%" dur="15s" repeatCount="indefinite" />
             </textPath>
@@ -171,20 +225,56 @@ transition: all 0.3s;
         </text>
     </svg>
 
-<!-- Botón flotante -->
     <button id="music-toggle">🔇</button>
     
-    <!-- Reproductor oculto -->
     <audio id="bg-music" loop>
         <source src="assets/creep.mp3" type="audio/mpeg">
     </audio>
 
     <script>
+        // ===== ESTRELLAS FUGACES =====
+        function createShootingStars() {
+            const container = document.getElementById('stars');
+            const starCount = 8; // Número de estrellas
+
+            for (let i = 0; i < starCount; i++) {
+                const star = document.createElement('div');
+                star.className = 'shooting-star';
+                
+                // Posiciones aleatorias
+                const x = Math.random() * 100;
+                const y = Math.random() * 100;
+                star.style.left = x + '%';
+                star.style.top = y + '%';
+                
+                // Retrasos aleatorios (0s a 8s)
+                const delay = Math.random() * 8;
+                star.style.animationDelay = delay + 's';
+                
+                // Duración variable (3s a 6s)
+                const duration = 3 + Math.random() * 3;
+                star.style.animationDuration = duration + 's';
+                
+                // Tamaño aleatorio
+                const size = 1 + Math.random() * 3;
+                star.style.width = size + 'px';
+                star.style.height = size + 'px';
+                
+                // Brillo aleatorio
+                const brightness = 0.4 + Math.random() * 0.6;
+                star.style.boxShadow = `0 0 ${6 * brightness}px ${2 * brightness}px rgba(255,255,255,${0.3 * brightness}), 0 0 ${20 * brightness}px ${8 * brightness}px rgba(180,160,255,${0.2 * brightness})`;
+                
+                container.appendChild(star);
+            }
+        }
+
+        createShootingStars();
+
+        // ===== MÚSICA =====
         const music = document.getElementById('bg-music');
         const toggleBtn = document.getElementById('music-toggle');
         let isPlaying = false;
 
-        // Intentar autoplay (puede fallar)
         music.play().then(() => {
             isPlaying = true;
             toggleBtn.textContent = '❚❚';
@@ -193,7 +283,6 @@ transition: all 0.3s;
             toggleBtn.textContent = '▶';
         });
 
-        // Control manual
         toggleBtn.addEventListener('click', () => {
             isPlaying ? music.pause() : music.play();
             isPlaying = !isPlaying;
@@ -201,7 +290,4 @@ transition: all 0.3s;
         });
     </script>
 </body>
-
 </html>
-
-
